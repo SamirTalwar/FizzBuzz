@@ -11,13 +11,13 @@ public final class FizzBuzz {
 
     public static Iterable<String> upTo(int max) {
         return new Range(1, max).map(Lambdas::fromInt).map((i) -> {
-            if (toBoolean(IsZero.call(fromInt(toInt(i) % toInt(Fifteen))))) {
+            if (toBoolean(IsZero.call(Mod.call(i).call(Fifteen)))) {
                 return "FizzBuzz";
             }
-            if (toBoolean(IsZero.call(fromInt(toInt(i) % toInt(Three))))) {
+            if (toBoolean(IsZero.call(Mod.call(i).call(Three)))) {
                 return "Fizz";
             }
-            if (toBoolean(IsZero.call(fromInt(toInt(i) % toInt(Five))))) {
+            if (toBoolean(IsZero.call(Mod.call(i).call(Five)))) {
                 return "Buzz";
             }
             return Integer.toString(toInt(i));
