@@ -21,6 +21,38 @@ public final class Lambdas {
                                                          .call((n) -> Mod.call(Subtract.call(x).call(y)).call(y).call(n))
                                                          .call(x);
 
+    public static interface Function<I, O> {
+        O apply(I input);
+    }
+
+    public static final class Result<T> implements Lambda {
+        private final T value;
+
+        public Result(T value) {
+            this.value = value;
+        }
+
+        public Lambda call(Lambda lambda) {
+            return this;
+        }
+
+        public T value() {
+            return value;
+        }
+    }
+
+    public static final class Transformation<T> implements Lambda {
+        private final Function<T, T> transformation;
+
+        public Transformation(Function<T, T> transformation) {
+            this.transformation = transformation;
+        }
+
+        public Lambda call(Lambda lambda) {
+            return new Result<T>(transformation.apply(((Result<T>) lambda).value()));
+        }
+    }
+
     public static final Lambda fromInt(int value) {
         if (value == 0) {
             return Zero;
@@ -29,14 +61,10 @@ public final class Lambdas {
     }
 
     public static final int toInt(Lambda lambda) {
-        final AtomicInteger value = new AtomicInteger(0);
-        lambda.call((_) -> { value.getAndIncrement(); return null; }).call(null);
-        return value.get();
+        return ((Result<Integer>) lambda.call(new Transformation<Integer>((i) -> i + 1)).call(new Result<>(0))).value();
     }
 
     public static final boolean toBoolean(Lambda lambda) {
-        final AtomicBoolean value = new AtomicBoolean();
-        lambda.call((_) -> { value.set(true); return null; }).call((_) -> { value.set(false); return null; }).call(null);
-        return value.get();
+        return ((Result<Boolean>) lambda.call(new Result<>(true)).call(new Result<>(false)).call(null)).value();
     }
 }
