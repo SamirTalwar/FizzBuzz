@@ -11,17 +11,19 @@ public final class FizzBuzz {
 
     public static Iterable<String> upTo(int max) {
         return new Range(1, max).map(Lambdas::fromInt).map((i) -> {
-            if (toBoolean(IsZero.call(Mod.call(i).call(Fifteen)))) {
-                return "FizzBuzz";
-            }
-            if (toBoolean(IsZero.call(Mod.call(i).call(Three)))) {
-                return "Fizz";
-            }
-            if (toBoolean(IsZero.call(Mod.call(i).call(Five)))) {
-                return "Buzz";
-            }
-            return Integer.toString(toInt(i));
-        });
+            return
+                If.call(IsZero.call(Mod.call(i).call(Fifteen)))
+                  .call(new Result<>("FizzBuzz"))
+                  .call(
+                If.call(IsZero.call(Mod.call(i).call(Three)))
+                  .call(new Result<>("Fizz"))
+                  .call(
+                If.call(IsZero.call(Mod.call(i).call(Five)))
+                  .call(new Result<>("Buzz"))
+                  .call(
+                new Result<>(Integer.toString(toInt(i)))
+                )));
+        }).map((lambda) -> ((Result<String>) lambda).value());
     }
 
     public static final class Range implements Iterable<Integer> {

@@ -21,6 +21,8 @@ public final class Lambdas {
                                                          .call((n) -> Mod.call(Subtract.call(x).call(y)).call(y).call(n))
                                                          .call(x);
 
+    public static final Lambda If = (p) -> (t) -> (f) -> p.call(t).call(f);
+
     public static interface Function<I, O> {
         O apply(I input);
     }
@@ -62,9 +64,5 @@ public final class Lambdas {
 
     public static final int toInt(Lambda lambda) {
         return ((Result<Integer>) lambda.call(new Transformation<Integer>((i) -> i + 1)).call(new Result<>(0))).value();
-    }
-
-    public static final boolean toBoolean(Lambda lambda) {
-        return ((Result<Boolean>) lambda.call(new Result<>(true)).call(new Result<>(false)).call(null)).value();
     }
 }
