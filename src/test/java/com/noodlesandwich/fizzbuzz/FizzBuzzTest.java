@@ -3,7 +3,7 @@ package com.noodlesandwich.fizzbuzz;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.contains;
 
 public final class FizzBuzzTest {
     private static final String[] Results = new String[] {
@@ -111,8 +111,6 @@ public final class FizzBuzzTest {
 
     @Test public void
     FizzBuzz_is_easy() {
-        for (int i = 1; i <= 100; i++) {
-            assertThat(FizzBuzz.forValue(i), is(Results[i - 1]));
-        }
+        assertThat(FizzBuzz.upTo(100), contains(Results));
     }
 }
