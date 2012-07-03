@@ -2,19 +2,21 @@ package com.noodlesandwich.fizzbuzz;
 
 import java.util.Iterator;
 
+import static com.noodlesandwich.fizzbuzz.Lambdas.*;
+
 public final class FizzBuzz {
     public static Iterable<String> upTo(int max) {
-        return new Range(1, max).map((i) -> {
-            if (i % 15 == 0) {
+        return new Range(1, max).map(Lambdas::fromInt).map((i) -> {
+            if (toInt(i) % 15 == 0) {
                 return "FizzBuzz";
             }
-            if (i % 3 == 0) {
+            if (toInt(i) % 3 == 0) {
                 return "Fizz";
             }
-            if (i % 5 == 0) {
+            if (toInt(i) % 5 == 0) {
                 return "Buzz";
             }
-            return Integer.toString(i);
+            return Integer.toString(toInt(i));
         });
     }
 
