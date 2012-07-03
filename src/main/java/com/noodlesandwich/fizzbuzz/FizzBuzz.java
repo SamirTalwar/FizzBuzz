@@ -5,15 +5,19 @@ import java.util.Iterator;
 import static com.noodlesandwich.fizzbuzz.Lambdas.*;
 
 public final class FizzBuzz {
+    private static final Lambda Three = Succ.call(Succ.call(Succ.call(Zero)));
+    private static final Lambda Five = Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Zero)))));
+    private static final Lambda Fifteen = Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Zero)))))))))))))));
+
     public static Iterable<String> upTo(int max) {
         return new Range(1, max).map(Lambdas::fromInt).map((i) -> {
-            if (toInt(i) % 15 == 0) {
+            if (toInt(i) % toInt(Fifteen) == toInt(Zero)) {
                 return "FizzBuzz";
             }
-            if (toInt(i) % 3 == 0) {
+            if (toInt(i) % toInt(Three) == toInt(Zero)) {
                 return "Fizz";
             }
-            if (toInt(i) % 5 == 0) {
+            if (toInt(i) % toInt(Five) == toInt(Zero)) {
                 return "Buzz";
             }
             return Integer.toString(toInt(i));
