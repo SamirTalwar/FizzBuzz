@@ -1,5 +1,7 @@
 package com.noodlesandwich.fizzbuzz;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.atomic.*;
 
 public final class Lambdas {
@@ -22,6 +24,21 @@ public final class Lambdas {
                                                          .call(x);
 
     public static final Lambda If = (p) -> (t) -> (f) -> p.call(t).call(f);
+
+    public static final Lambda Pair = (a) -> (b) -> (f) -> f.call(a).call(b);
+    public static final Lambda First = (p) -> p.call((a) -> (b) -> a);
+    public static final Lambda Second = (p) -> p.call((a) -> (b) -> b);
+
+    public static final Lambda Nil = Pair.call(True).call(True);
+    public static final Lambda Cons = (h) -> (t) -> Pair.call(False).call(Pair.call(h).call(t));
+    public static final Lambda Head = (z) -> First.call(Second.call(z));
+    public static final Lambda Tail = (z) -> Second.call(Second.call(z));
+    public static final Lambda IsNil = First;
+
+    public static final Lambda Range = (a) -> (b) ->
+            If.call(IsZero.call(Subtract.call(b).call(a)))
+              .call(Nil)
+              .call(Cons.call(a).call((x) -> Range.call(Succ.call(a)).call(b).call(x)));
 
     public static interface Function<I, O> {
         O apply(I input);
@@ -64,5 +81,18 @@ public final class Lambdas {
 
     public static final int toInt(Lambda lambda) {
         return ((Result<Integer>) lambda.call(new Transformation<Integer>((i) -> i + 1)).call(new Result<>(0))).value();
+    }
+
+    public static final Iterable<Lambda> toIterable(Lambda lambda) {
+        return ((Result<List<Lambda>>)
+            If.call(IsNil.call(lambda))
+              .call(new Result<List<Lambda>>(new LinkedList<Lambda>()))
+              .call((x) -> {
+                  List<Lambda> list = (List<Lambda>) toIterable(Tail.call(lambda));
+                  list.add(0, Head.call(lambda));
+                  return new Result<List<Lambda>>(list);
+              })
+              .call(null)
+          ).value();
     }
 }
