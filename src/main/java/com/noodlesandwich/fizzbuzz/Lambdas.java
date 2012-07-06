@@ -90,7 +90,7 @@ public final class Lambdas {
               .call((x) -> {
                   List<Lambda> list = (List<Lambda>) toIterable(Tail.call(lambda));
                   list.add(0, Head.call(lambda));
-                  return new Result<List<Lambda>>(list);
+                  return new Result<>(list);
               })
               .call(null)
           ).value();

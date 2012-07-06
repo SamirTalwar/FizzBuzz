@@ -3,6 +3,7 @@ package com.noodlesandwich.fizzbuzz;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static com.noodlesandwich.fizzbuzz.Lambdas.*;
 
@@ -61,6 +62,16 @@ public final class LambdasTest {
         assertThat(toBoolean(IsNil.call(list)), is(false));
         assertThat(Head.call(list), is(element));
         assertThat(toBoolean(IsNil.call(Tail.call(list))), is(true));
+    }
+
+    @Test public void
+    creates_a_list() {
+        Lambda a = aLambda();
+        Lambda b = aLambda();
+        Lambda c = aLambda();
+        Lambda list = Cons.call(a).call(Cons.call(b).call(Cons.call(c).call(Nil)));
+
+        assertThat(toIterable(list), contains(a, b, c));
     }
 
     private static Lambda aLambda() {
