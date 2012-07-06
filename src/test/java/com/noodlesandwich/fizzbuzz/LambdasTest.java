@@ -14,4 +14,16 @@ public final class LambdasTest {
         assertThat(toInt(Succ.call(Succ.call(Zero))), is(2));
         assertThat(toInt(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Zero)))))), is(5));
     }
+
+    @Test public void
+    if_works() {
+        Lambda x = aLambda();
+        Lambda y = aLambda();
+        assertThat(If.call(True).call(x).call(y), is(x));
+        assertThat(If.call(False).call(x).call(y), is(y));
+    }
+
+    private static Lambda aLambda() {
+        return (a) -> a;
+    }
 }
