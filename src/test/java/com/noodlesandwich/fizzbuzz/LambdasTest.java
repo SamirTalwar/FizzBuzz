@@ -49,6 +49,20 @@ public final class LambdasTest {
         assertThat(If.call(False).call(x).call(y), is(y));
     }
 
+    @Test public void
+    Nil_works() {
+        assertThat(toBoolean(IsNil.call(Nil)), is(true));
+    }
+
+    @Test public void
+    Cons_works() {
+        Lambda element = aLambda();
+        Lambda list = Cons.call(element).call(Nil);
+        assertThat(toBoolean(IsNil.call(list)), is(false));
+        assertThat(Head.call(list), is(element));
+        assertThat(toBoolean(IsNil.call(Tail.call(list))), is(true));
+    }
+
     private static Lambda aLambda() {
         return (a) -> a;
     }
