@@ -30,6 +30,18 @@ public final class LambdasTest {
     }
 
     @Test public void
+    numbers_stop_decrementing_at_zero() {
+        assertThat(toInt(Pred.call(Zero)), is(0));
+    }
+
+    @Test public void
+    IsZero_works() {
+        assertThat(toBoolean(IsZero.call(Zero)), is(true));
+        assertThat(toBoolean(IsZero.call(fromInt(1))), is(false));
+        assertThat(toBoolean(IsZero.call(fromInt(2))), is(false));
+    }
+
+    @Test public void
     if_works() {
         Lambda x = aLambda();
         Lambda y = aLambda();
@@ -39,5 +51,9 @@ public final class LambdasTest {
 
     private static Lambda aLambda() {
         return (a) -> a;
+    }
+
+    private static boolean toBoolean(Lambda lambda) {
+        return ((Result<Boolean>) (lambda.call(new Result<>(true)).call(new Result<>(false)))).value();
     }
 }
