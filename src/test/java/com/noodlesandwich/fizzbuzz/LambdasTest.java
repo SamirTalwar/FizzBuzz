@@ -74,6 +74,12 @@ public final class LambdasTest {
         assertThat(toIterable(list), contains(a, b, c));
     }
 
+    @Test public void
+    Range_works() {
+        Lambda range = Range.call(fromInt(5)).call(fromInt(10));
+        assertThat(toIterable(range).map(Lambdas::toInt), contains(5, 6, 7, 8, 9));
+    }
+
     private static Lambda aLambda() {
         return (a) -> a;
     }
