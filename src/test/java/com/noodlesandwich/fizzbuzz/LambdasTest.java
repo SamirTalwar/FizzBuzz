@@ -24,7 +24,7 @@ public final class LambdasTest {
     }
 
     @Test public void
-    modulus_works() {
+    Mod_works() {
         assertThat(toInt(Mod.call(fromInt(2)).call(fromInt(5))), is(2));
         assertThat(toInt(Mod.call(fromInt(18)).call(fromInt(7))), is(4));
     }
@@ -42,7 +42,7 @@ public final class LambdasTest {
     }
 
     @Test public void
-    if_works() {
+    If_works() {
         Lambda x = aLambda();
         Lambda y = aLambda();
         assertThat(If.call(True).call(x).call(y), is(x));
