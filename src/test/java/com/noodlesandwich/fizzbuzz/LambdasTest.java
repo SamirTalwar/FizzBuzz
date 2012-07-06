@@ -13,6 +13,20 @@ public final class LambdasTest {
         assertThat(toInt(Succ.call(Zero)), is(1));
         assertThat(toInt(Succ.call(Succ.call(Zero))), is(2));
         assertThat(toInt(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Zero)))))), is(5));
+
+        assertThat(toInt(fromInt(10)), is(10));
+    }
+
+    @Test public void
+    arithmetic_works() {
+        assertThat(toInt(Add.call(fromInt(5)).call(fromInt(7))), is(12));
+        assertThat(toInt(Subtract.call(fromInt(9)).call(fromInt(3))), is(6));
+    }
+
+    @Test public void
+    modulus_works() {
+        assertThat(toInt(Mod.call(fromInt(2)).call(fromInt(5))), is(2));
+        assertThat(toInt(Mod.call(fromInt(18)).call(fromInt(7))), is(4));
     }
 
     @Test public void
