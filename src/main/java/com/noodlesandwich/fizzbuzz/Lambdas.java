@@ -40,6 +40,11 @@ public final class Lambdas {
               .call(Nil)
               .call(Cons.call(a).call((x) -> Range.call(Succ.call(a)).call(b).call(x)));
 
+    public static final Lambda Map = (f) -> (z) ->
+            If.call(IsNil.call(z))
+              .call(Nil)
+              .call(Cons.call(f.call(Head.call(z))).call((x) -> Map.call(f).call(Tail.call(z)).call(x)));
+
     public static interface Function<I, O> {
         O apply(I input);
     }
@@ -80,7 +85,8 @@ public final class Lambdas {
     }
 
     public static final int toInt(Lambda lambda) {
-        return ((Result<Integer>) lambda.call(new Transformation<Integer>((i) -> i + 1)).call(new Result<>(0))).value();
+        Lambda result = lambda.call(new Transformation<Integer>((i) -> i + 1)).call(new Result<>(0));
+        return ((Result<Integer>) result.call(null)).value();
     }
 
     public static final Iterable<Lambda> toIterable(Lambda lambda) {
