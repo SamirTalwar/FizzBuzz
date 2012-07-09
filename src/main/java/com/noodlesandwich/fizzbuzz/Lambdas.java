@@ -17,11 +17,17 @@ public final class Lambdas {
     public static final Lambda Pred = (n) -> (f) -> (x) -> n.call((g) -> (h) -> h.call(g.call(f))).call((_) -> x).call((u) -> u);
     public static final Lambda IsZero = (f) -> f.call((x) -> False).call(True);
 
+    public static final Lambda Y = (f) -> ((Lambda) ((x) -> f.call(x.call(x))))
+                                               .call((x) -> f.call(x.call(x)));
+    public static final Lambda Z = (f) -> ((Lambda) ((x) -> f.call((y) -> x.call(x).call(y))))
+                                               .call((x) -> f.call((y) -> x.call(x).call(y)));
+
     public static final Lambda Add = (x) -> x.call(Succ);
     public static final Lambda Subtract = (x) -> (y) -> y.call(Pred).call(x);
-    public static final Lambda Mod = (x) -> (y) -> IsZero.call(Subtract.call(y).call(x))
-                                                         .call((n) -> Mod.call(Subtract.call(x).call(y)).call(y).call(n))
-                                                         .call(x);
+    public static final Lambda Mod = Z.call((_Mod) -> (x) -> (y) ->
+            IsZero.call(Subtract.call(y).call(x))
+                  .call((n) -> _Mod.call(Subtract.call(x).call(y)).call(y).call(n))
+                  .call(x));
 
     public static final Lambda If = (p) -> (t) -> (f) -> p.call(t).call(f);
 
@@ -35,15 +41,15 @@ public final class Lambdas {
     public static final Lambda Tail = (z) -> Second.call(Second.call(z));
     public static final Lambda IsNil = First;
 
-    public static final Lambda Range = (a) -> (b) ->
+    public static final Lambda Range = Z.call((_Range) -> (a) -> (b) ->
             If.call(IsZero.call(Subtract.call(b).call(a)))
               .call(Nil)
-              .call(Cons.call(a).call((x) -> Range.call(Succ.call(a)).call(b).call(x)));
+              .call(Cons.call(a).call((x) -> _Range.call(Succ.call(a)).call(b).call(x))));
 
-    public static final Lambda Map = (f) -> (z) ->
+    public static final Lambda Map = Z.call((_Map) -> (f) -> (z) ->
             If.call(IsNil.call(z))
               .call(Nil)
-              .call(Cons.call(f.call(Head.call(z))).call((x) -> Map.call(f).call(Tail.call(z)).call(x)));
+              .call(Cons.call(f.call(Head.call(z))).call((x) -> _Map.call(f).call(Tail.call(z)).call(x))));
 
     public static interface Function<I, O> {
         O apply(I input);
