@@ -1,5 +1,6 @@
 package com.noodlesandwich.fizzbuzz;
 
+import java.util.streams.Stream;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -71,19 +72,20 @@ public final class LambdasTest {
         Lambda c = aLambda();
         Lambda list = Cons.call(a).call(Cons.call(b).call(Cons.call(c).call(Nil)));
 
-        assertThat(toIterable(list), contains(a, b, c));
+        assertThat(toList(list), contains(a, b, c));
     }
 
     @Test public void
     Range_works() {
         Lambda range = Range.call(fromInt(5)).call(fromInt(10));
-        assertThat(toIterable(range).map(Lambdas::toInt), contains(5, 6, 7, 8, 9));
+        assertThat(iterable(toList(range).stream().map(Lambdas::toInt)), contains(5, 6, 7, 8, 9));
     }
 
     @Test public void
     Map_works() {
         Lambda range = Range.call(fromInt(2)).call(fromInt(5));
-        assertThat(toIterable(Map.call(Add.call(fromInt(4))).call(range)).map(Lambdas::toInt), contains(6, 7, 8));
+        assertThat(iterable(toList(Map.call(Add.call(fromInt(4))).call(range)).stream().map(Lambdas::toInt)),
+                   contains(6, 7, 8));
     }
 
     private static Lambda aLambda() {
@@ -92,5 +94,9 @@ public final class LambdasTest {
 
     private static boolean toBoolean(Lambda lambda) {
         return ((Result<Boolean>) (lambda.call(new Result<>(true)).call(new Result<>(false)))).value();
+    }
+
+    private static <T> Iterable<T> iterable(Stream<T> stream) {
+        return () -> stream.iterator();
     }
 }

@@ -2,7 +2,6 @@ package com.noodlesandwich.fizzbuzz;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.atomic.*;
 
 public final class Lambdas {
     public static interface Lambda {
@@ -95,12 +94,12 @@ public final class Lambdas {
         return ((Result<Integer>) result.call(null)).value();
     }
 
-    public static final Iterable<Lambda> toIterable(Lambda lambda) {
+    public static final List<Lambda> toList(Lambda lambda) {
         return ((Result<List<Lambda>>)
             If.call(IsNil.call(lambda))
               .call(new Result<List<Lambda>>(new LinkedList<Lambda>()))
               .call((x) -> {
-                  List<Lambda> list = (List<Lambda>) toIterable(Tail.call(lambda));
+                  List<Lambda> list = toList(Tail.call(lambda));
                   list.add(0, Head.call(lambda));
                   return new Result<>(list);
               })

@@ -1,5 +1,7 @@
 package com.noodlesandwich.fizzbuzz;
 
+import java.util.streams.Stream;
+
 import static com.noodlesandwich.fizzbuzz.Lambdas.*;
 
 public final class FizzBuzz {
@@ -8,8 +10,8 @@ public final class FizzBuzz {
     private static final Lambda Five = Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Zero)))));
     private static final Lambda Fifteen = Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Zero)))))))))))))));
 
-    public static Iterable<String> upTo(int max) {
-        return toIterable(
+    public static Stream<String> upTo(int max) {
+        return toList(
             Map.call((i) ->
                 If.call(IsZero.call(Mod.call(i).call(Fifteen)))
                   .call(new Result<>("FizzBuzz"))
@@ -23,6 +25,6 @@ public final class FizzBuzz {
                 new Result<>(Integer.toString(toInt(i)))
                 )))
             ).call(Range.call(One).call(Succ.call(fromInt(max))))
-        ).map((lambda) -> ((Result<String>) lambda).value());
+        ).stream().map((lambda) -> ((Result<String>) lambda).value());
     }
 }
