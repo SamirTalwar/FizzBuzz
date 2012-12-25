@@ -1,6 +1,6 @@
 package com.noodlesandwich.fizzbuzz;
 
-import java.util.streams.Stream;
+import java.util.stream.Stream;
 
 import static com.noodlesandwich.fizzbuzz.Lambdas.*;
 
