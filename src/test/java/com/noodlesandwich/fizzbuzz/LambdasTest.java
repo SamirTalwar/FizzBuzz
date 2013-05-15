@@ -65,6 +65,7 @@ public final class LambdasTest {
         assertThat(toBoolean(IsNil.call(Tail.call(list))), is(true));
     }
 
+    @SuppressWarnings("unchecked")
     @Test public void
     creates_a_list() {
         Lambda a = aLambda();
@@ -75,12 +76,14 @@ public final class LambdasTest {
         assertThat(toList(list), contains(a, b, c));
     }
 
+    @SuppressWarnings("unchecked")
     @Test public void
     Range_works() {
         Lambda range = Range.call(fromInt(5)).call(fromInt(10));
         assertThat(iterable(toList(range).stream().map(Lambdas::toInt)), contains(5, 6, 7, 8, 9));
     }
 
+    @SuppressWarnings("unchecked")
     @Test public void
     Map_works() {
         Lambda range = Range.call(fromInt(2)).call(fromInt(5));
@@ -92,11 +95,12 @@ public final class LambdasTest {
         return (a) -> a;
     }
 
+    @SuppressWarnings("unchecked")
     private static boolean toBoolean(Lambda lambda) {
         return ((Result<Boolean>) (lambda.call(new Result<>(true)).call(new Result<>(false)))).value();
     }
 
     private static <T> Iterable<T> iterable(Stream<T> stream) {
-        return () -> stream.iterator();
+        return stream::iterator;
     }
 }

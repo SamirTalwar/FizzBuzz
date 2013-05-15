@@ -77,27 +77,30 @@ public final class Lambdas {
             this.transformation = transformation;
         }
 
+        @SuppressWarnings("unchecked")
         public Lambda call(Lambda lambda) {
-            return new Result<T>(transformation.apply(((Result<T>) lambda).value()));
+            return new Result<>(transformation.apply(((Result<T>) lambda).value()));
         }
     }
 
-    public static final Lambda fromInt(int value) {
+    public static Lambda fromInt(int value) {
         if (value == 0) {
             return Zero;
         }
         return Succ.call(fromInt(value - 1));
     }
 
-    public static final int toInt(Lambda lambda) {
+    @SuppressWarnings("unchecked")
+    public static int toInt(Lambda lambda) {
         Lambda result = lambda.call(new Transformation<Integer>((i) -> i + 1)).call(new Result<>(0));
         return ((Result<Integer>) result.call(null)).value();
     }
 
-    public static final List<Lambda> toList(Lambda lambda) {
+    @SuppressWarnings("unchecked")
+    public static List<Lambda> toList(Lambda lambda) {
         return ((Result<List<Lambda>>)
             If.call(IsNil.call(lambda))
-              .call(new Result<List<Lambda>>(new LinkedList<Lambda>()))
+              .call(new Result<List<Lambda>>(new LinkedList<>()))
               .call((x) -> {
                   List<Lambda> list = toList(Tail.call(lambda));
                   list.add(0, Head.call(lambda));

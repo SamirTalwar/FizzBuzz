@@ -10,6 +10,7 @@ public final class FizzBuzz {
     private static final Lambda Five = Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Zero)))));
     private static final Lambda Fifteen = Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Zero)))))))))))))));
 
+    @SuppressWarnings("unchecked")
     public static Stream<String> upTo(int max) {
         return toList(
             Map.call((i) ->
