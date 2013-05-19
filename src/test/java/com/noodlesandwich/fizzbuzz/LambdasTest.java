@@ -3,10 +3,10 @@ package com.noodlesandwich.fizzbuzz;
 import java.util.stream.Stream;
 import org.junit.Test;
 
+import static com.noodlesandwich.fizzbuzz.Lambdas.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
-import static com.noodlesandwich.fizzbuzz.Lambdas.*;
 
 public final class LambdasTest {
     @Test public void
@@ -80,14 +80,14 @@ public final class LambdasTest {
     @Test public void
     Range_works() {
         Lambda range = Range.call(fromInt(5)).call(fromInt(10));
-        assertThat(iterable(toList(range).stream().map(Lambdas::toInt)), contains(5, 6, 7, 8, 9));
+        assertThat(integers(range), contains(5, 6, 7, 8, 9));
     }
 
     @SuppressWarnings("unchecked")
     @Test public void
     Map_works() {
         Lambda range = Range.call(fromInt(2)).call(fromInt(5));
-        assertThat(iterable(toList(Map.call(Add.call(fromInt(4))).call(range)).stream().map(Lambdas::toInt)),
+        assertThat(integers(Map.call(Add.call(fromInt(4))).call(range)),
                    contains(6, 7, 8));
     }
 
@@ -100,7 +100,8 @@ public final class LambdasTest {
         return ((Result<Boolean>) (lambda.call(new Result<>(true)).call(new Result<>(false)))).value();
     }
 
-    private static <T> Iterable<T> iterable(Stream<T> stream) {
+    private static Iterable<Integer> integers(Lambda lambda) {
+        Stream<Integer> stream = toList(lambda).stream().map(Lambdas::toInt);
         return stream::iterator;
     }
 }
