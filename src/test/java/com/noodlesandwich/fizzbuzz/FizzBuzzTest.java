@@ -116,6 +116,6 @@ public final class FizzBuzzTest {
     }
 
     private static <T> Iterable<T> iterable(Stream<T> stream) {
-        return () -> stream.iterator();
+        return stream::iterator;
     }
 }
