@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public final class Lambdas {
+    @FunctionalInterface
     public static interface Lambda {
         Lambda call(Lambda value);
     }
