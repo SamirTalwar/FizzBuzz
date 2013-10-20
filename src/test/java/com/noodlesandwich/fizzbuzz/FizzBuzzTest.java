@@ -1,6 +1,5 @@
 package com.noodlesandwich.fizzbuzz;
 
-import java.util.stream.Stream;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -112,10 +111,6 @@ public final class FizzBuzzTest {
 
     @Test public void
     FizzBuzz_is_easy() {
-        assertThat(iterable(FizzBuzz.upTo(100)), contains(Results));
-    }
-
-    private static <T> Iterable<T> iterable(Stream<T> stream) {
-        return stream::iterator;
+        assertThat(FizzBuzz.upTo(100), contains(Results));
     }
 }

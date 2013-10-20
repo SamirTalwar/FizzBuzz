@@ -4,11 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public final class Lambdas {
-    @FunctionalInterface
-    public static interface Lambda {
-        Lambda call(Lambda value);
-    }
-
     public static final Lambda True = x -> y -> x;
     public static final Lambda False = x -> y -> y;
 
@@ -41,6 +36,10 @@ public final class Lambdas {
     public static final Lambda Head = z -> First.call(Second.call(z));
     public static final Lambda Tail = z -> Second.call(Second.call(z));
     public static final Lambda IsNil = First;
+    public static final Lambda Concat = Z.call(_Concat -> a -> b ->
+            If.call(IsNil.call(a))
+              .call(b)
+              .call(Cons.call(Head.call(a)).call(x -> _Concat.call(Tail.call(a)).call(b).call(x))));
 
     public static final Lambda Range = Z.call(_Range -> a -> b ->
             If.call(IsZero.call(Subtract.call(b).call(a)))
@@ -98,6 +97,16 @@ public final class Lambdas {
     public static int toInt(Lambda lambda) {
         Lambda result = lambda.call(new Transformation<Integer>(i -> i + 1)).call(new Result<>(0));
         return ((Result<Integer>) result.call(null)).value();
+    }
+
+    public static Lambda fromList(List<Lambda> list) {
+        if (list.isEmpty()) {
+            return Nil;
+        }
+
+        Lambda head = list.get(0);
+        List<Lambda> tail = list.subList(1, list.size());
+        return Cons.call(head).call(fromList(tail));
     }
 
     @SuppressWarnings("unchecked")
