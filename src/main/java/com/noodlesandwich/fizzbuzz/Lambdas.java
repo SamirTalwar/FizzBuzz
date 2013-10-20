@@ -9,47 +9,47 @@ public final class Lambdas {
         Lambda call(Lambda value);
     }
 
-    public static final Lambda True = (x) -> (y) -> x;
-    public static final Lambda False = (x) -> (y) -> y;
+    public static final Lambda True = x -> y -> x;
+    public static final Lambda False = x -> y -> y;
 
-    public static final Lambda Zero = (f) -> (x) -> x;
-    public static final Lambda Succ = (n) -> (f) -> (x) -> f.call(n.call(f).call(x));
-    public static final Lambda Pred = (n) -> (f) -> (x) -> n.call((g) -> (h) -> h.call(g.call(f))).call((ignored) -> x).call((u) -> u);
-    public static final Lambda IsZero = (f) -> f.call((x) -> False).call(True);
+    public static final Lambda Zero = f -> x -> x;
+    public static final Lambda Succ = n -> f -> x -> f.call(n.call(f).call(x));
+    public static final Lambda Pred = n -> f -> x -> n.call(g -> h -> h.call(g.call(f))).call(ignored -> x).call(u -> u);
+    public static final Lambda IsZero = f -> f.call(x -> False).call(True);
 
-    public static final Lambda Y = (f) -> ((Lambda) ((x) -> f.call(x.call(x))))
-                                               .call((x) -> f.call(x.call(x)));
-    public static final Lambda Z = (f) -> ((Lambda) ((x) -> f.call((y) -> x.call(x).call(y))))
-                                               .call((x) -> f.call((y) -> x.call(x).call(y)));
+    public static final Lambda Y = f -> ((Lambda) (x -> f.call(x.call(x))))
+                                               .call(x -> f.call(x.call(x)));
+    public static final Lambda Z = f -> ((Lambda) (x -> f.call(y -> x.call(x).call(y))))
+                                               .call(x -> f.call(y -> x.call(x).call(y)));
 
-    public static final Lambda Add = (x) -> x.call(Succ);
-    public static final Lambda Subtract = (x) -> (y) -> y.call(Pred).call(x);
-    public static final Lambda Mod = Z.call((_Mod) -> (x) -> (y) ->
+    public static final Lambda Add = x -> x.call(Succ);
+    public static final Lambda Subtract = x -> y -> y.call(Pred).call(x);
+    public static final Lambda Mod = Z.call(_Mod -> x -> y ->
             IsZero.call(Subtract.call(y).call(x))
-                  .call((n) -> _Mod.call(Subtract.call(x).call(y)).call(y).call(n))
+                  .call(n -> _Mod.call(Subtract.call(x).call(y)).call(y).call(n))
                   .call(x));
 
-    public static final Lambda If = (p) -> (t) -> (f) -> p.call(t).call(f);
+    public static final Lambda If = p -> t -> f -> p.call(t).call(f);
 
-    public static final Lambda Pair = (a) -> (b) -> (f) -> f.call(a).call(b);
-    public static final Lambda First = (p) -> p.call((a) -> (b) -> a);
-    public static final Lambda Second = (p) -> p.call((a) -> (b) -> b);
+    public static final Lambda Pair = a -> b -> f -> f.call(a).call(b);
+    public static final Lambda First = p -> p.call(a -> b -> a);
+    public static final Lambda Second = p -> p.call(a -> b -> b);
 
     public static final Lambda Nil = Pair.call(True).call(True);
-    public static final Lambda Cons = (h) -> (t) -> Pair.call(False).call(Pair.call(h).call(t));
-    public static final Lambda Head = (z) -> First.call(Second.call(z));
-    public static final Lambda Tail = (z) -> Second.call(Second.call(z));
+    public static final Lambda Cons = h -> t -> Pair.call(False).call(Pair.call(h).call(t));
+    public static final Lambda Head = z -> First.call(Second.call(z));
+    public static final Lambda Tail = z -> Second.call(Second.call(z));
     public static final Lambda IsNil = First;
 
-    public static final Lambda Range = Z.call((_Range) -> (a) -> (b) ->
+    public static final Lambda Range = Z.call(_Range -> a -> b ->
             If.call(IsZero.call(Subtract.call(b).call(a)))
               .call(Nil)
-              .call(Cons.call(a).call((x) -> _Range.call(Succ.call(a)).call(b).call(x))));
+              .call(Cons.call(a).call(x -> _Range.call(Succ.call(a)).call(b).call(x))));
 
-    public static final Lambda Map = Z.call((_Map) -> (f) -> (z) ->
+    public static final Lambda Map = Z.call(_Map -> f -> z ->
             If.call(IsNil.call(z))
               .call(Nil)
-              .call(Cons.call(f.call(Head.call(z))).call((x) -> _Map.call(f).call(Tail.call(z)).call(x))));
+              .call(Cons.call(f.call(Head.call(z))).call(x -> _Map.call(f).call(Tail.call(z)).call(x))));
 
     public static interface Function<I, O> {
         O apply(I input);
@@ -93,7 +93,7 @@ public final class Lambdas {
 
     @SuppressWarnings("unchecked")
     public static int toInt(Lambda lambda) {
-        Lambda result = lambda.call(new Transformation<Integer>((i) -> i + 1)).call(new Result<>(0));
+        Lambda result = lambda.call(new Transformation<Integer>(i -> i + 1)).call(new Result<>(0));
         return ((Result<Integer>) result.call(null)).value();
     }
 
@@ -102,7 +102,7 @@ public final class Lambdas {
         return ((Result<List<Lambda>>)
             If.call(IsNil.call(lambda))
               .call(new Result<List<Lambda>>(new LinkedList<>()))
-              .call((x) -> {
+              .call(x -> {
                   List<Lambda> list = toList(Tail.call(lambda));
                   list.add(0, Head.call(lambda));
                   return new Result<>(list);
