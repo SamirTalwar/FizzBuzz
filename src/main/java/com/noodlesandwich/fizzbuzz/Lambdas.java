@@ -46,10 +46,12 @@ public final class Lambdas {
               .call(Nil)
               .call(Cons.call(a).call(x -> _Range.call(Succ.call(a)).call(b).call(x))));
 
-    public static final Lambda Map = Z.call(_Map -> f -> z ->
-            If.call(IsNil.call(z))
-              .call(Nil)
-              .call(Cons.call(f.call(Head.call(z))).call(x -> _Map.call(f).call(Tail.call(z)).call(x))));
+    public static final Lambda Fold = Z.call(_Fold -> f -> z -> l ->
+            If.call(IsNil.call(l))
+              .call(z)
+              .call(f.call(Head.call(l)).call(x -> _Fold.call(f).call(z).call(Tail.call(l)).call(x))));
+
+    public static final Lambda Map = f -> Fold.call(h -> t -> Cons.call(f.call(h)).call(t)).call(Nil);
 
     public static interface Function<I, O> {
         O apply(I input);
