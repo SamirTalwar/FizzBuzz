@@ -8,7 +8,7 @@ public final class FizzBuzz {
     private static final Lambda One = Succ.call(Zero);
     private static final Lambda Three = Succ.call(Succ.call(Succ.call(Zero)));
     private static final Lambda Five = Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Zero)))));
-    private static final Lambda Fifteen = Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Zero)))))))))))))));
+    private static final Lambda Fifteen = Multiply.call(Three).call(Five);
 
     @SuppressWarnings("unchecked")
     public static Stream<String> upTo(int max) {

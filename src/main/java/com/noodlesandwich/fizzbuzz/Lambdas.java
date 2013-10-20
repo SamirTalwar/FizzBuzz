@@ -24,6 +24,7 @@ public final class Lambdas {
 
     public static final Lambda Add = x -> x.call(Succ);
     public static final Lambda Subtract = x -> y -> y.call(Pred).call(x);
+    public static final Lambda Multiply = x -> y -> y.call(Add.call(x)).call(Zero);
     public static final Lambda Mod = Z.call(_Mod -> x -> y ->
             IsZero.call(Subtract.call(y).call(x))
                   .call(n -> _Mod.call(Subtract.call(x).call(y)).call(y).call(n))
