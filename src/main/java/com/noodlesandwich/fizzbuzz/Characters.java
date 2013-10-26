@@ -1,6 +1,6 @@
 package com.noodlesandwich.fizzbuzz;
 
-import java.util.stream.Collectors;
+import java.util.List;
 
 import static com.noodlesandwich.fizzbuzz.Lambdas.*;
 
@@ -72,11 +72,28 @@ public final class Characters {
 
     private static final char[] characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
 
+    private static final Lambda Ten = Succ.call(_9);
+    private static final Lambda Numbers = Range.call(Zero).call(Ten);
+
     public static char toChar(Lambda c) {
         return characters[toInt(c)];
     }
 
     public static String toS(Lambda list) {
-        return toList(list).stream().map(c -> String.valueOf(toChar(c))).collect(Collectors.joining());
+        List<Lambda> characters = toList(list);
+        StringBuilder string = new StringBuilder();
+        for (Lambda c : characters) {
+            string.append(toChar(c));
+        }
+        return string.toString();
     }
+
+    public static final Lambda NumberAsChar = n -> Index.call(n).call(Numbers);
+
+    public static final Lambda NumberAsString = Z.call(_NumberAsString -> n ->
+            If.call(IsLessOrEqual.call(n).call(Ten))
+              .call(Cons.call(NumberAsChar.call(n)).call(Nil))
+              .call(z -> Append.call(_NumberAsString.call(Divide.call(n).call(Ten)))
+                               .call(Mod.call(n).call(Ten))
+                               .call(z)));
 }

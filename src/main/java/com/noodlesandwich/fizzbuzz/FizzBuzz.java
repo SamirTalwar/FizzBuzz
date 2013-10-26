@@ -20,7 +20,7 @@ public final class FizzBuzz {
     @SuppressWarnings("unchecked")
     public static List<String> upTo(int max) {
         return toList(
-            Map.call((i) ->
+            Map.call(i ->
                 If.call(IsZero.call(Mod.call(i).call(Fifteen)))
                   .call(FizzBuzz)
                   .call(
@@ -30,9 +30,9 @@ public final class FizzBuzz {
                 If.call(IsZero.call(Mod.call(i).call(Five)))
                   .call(Buzz)
                   .call(
-                new Result<>(Integer.toString(toInt(i)))
+                NumberAsString.call(i)
                 )))
             ).call(Range.call(One).call(Succ.call(fromInt(max))))
-        ).stream().map(lambda -> lambda instanceof Result ? ((Result<String>) lambda).value() : toS(lambda)).collect(Collectors.<String>toList());
+        ).stream().map(Characters::toS).collect(Collectors.<String>toList());
     }
 }
