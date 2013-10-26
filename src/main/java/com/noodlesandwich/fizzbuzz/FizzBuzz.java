@@ -17,22 +17,23 @@ public final class FizzBuzz {
     private static final Lambda Buzz = fromList(Arrays.asList(_B, _u, _z, _z));
     private static final Lambda FizzBuzz = Concat.call(Fizz).call(Buzz);
 
-    @SuppressWarnings("unchecked")
     public static List<String> upTo(int max) {
-        return toList(
-            Map.call(i ->
-                If.call(IsZero.call(Mod.call(i).call(Fifteen)))
-                  .call(FizzBuzz)
-                  .call(
-                If.call(IsZero.call(Mod.call(i).call(Three)))
-                  .call(Fizz)
-                  .call(
-                If.call(IsZero.call(Mod.call(i).call(Five)))
-                  .call(Buzz)
-                  .call(
-                NumberAsString.call(i)
-                )))
-            ).call(Range.call(One).call(Succ.call(fromInt(max))))
-        ).stream().map(Characters::toS).collect(Collectors.<String>toList());
+        return toList(upTo(fromInt(max))).stream().map(Characters::toS).collect(Collectors.<String>toList());
+    }
+
+    public static Lambda upTo(Lambda max) {
+        return Map.call(i ->
+            If.call(IsZero.call(Mod.call(i).call(Fifteen)))
+              .call(FizzBuzz)
+              .call(
+            If.call(IsZero.call(Mod.call(i).call(Three)))
+              .call(Fizz)
+              .call(
+            If.call(IsZero.call(Mod.call(i).call(Five)))
+              .call(Buzz)
+              .call(
+            NumberAsString.call(i)
+            )))
+        ).call(Range.call(One).call(Succ.call(max)));
     }
 }
