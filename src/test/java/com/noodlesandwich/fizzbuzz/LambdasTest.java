@@ -71,12 +71,14 @@ public final class LambdasTest {
         assertThat(toInt(Divide.call(fromInt(120)).call(fromInt(120))), is(1));
         assertThat(toInt(Divide.call(fromInt(15)).call(One)), is(15));
         assertThat(toInt(Divide.call(fromInt(18)).call(fromInt(3))), is(6));
+        assertThat(toInt(Divide.call(fromInt(100)).call(fromInt(10))), is(10));
     }
 
     @Test public void
     Mod_works() {
         assertThat(toInt(Mod.call(fromInt(2)).call(fromInt(5))), is(2));
         assertThat(toInt(Mod.call(fromInt(18)).call(fromInt(7))), is(4));
+        assertThat(toInt(Mod.call(fromInt(100)).call(fromInt(10))), is(0));
     }
 
     @Test public void
@@ -164,6 +166,14 @@ public final class LambdasTest {
         assertThat(toInt(Index.call(fromInt(0)).call(list)), is(6));
         assertThat(toInt(Index.call(fromInt(2)).call(list)), is(2));
         assertThat(toInt(Index.call(fromInt(6)).call(list)), is(4));
+    }
+
+    @Test public void
+    Append_works() {
+        assertThat(integers(Append.call(Nil).call(fromInt(99))), contains(99));
+
+        Lambda list = integers(Stream.of(6, 3, 2, 12, 9, 21));
+        assertThat(integers(Append.call(list).call(fromInt(7))), contains(6, 3, 2, 12, 9, 21, 7));
     }
 
     private static Lambda aLambda() {
