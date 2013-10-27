@@ -91,7 +91,7 @@ public final class Characters {
     public static final Lambda NumberAsChar = n -> Index.call(n).call(Numbers);
 
     public static final Lambda NumberAsString = Z.call(_NumberAsString -> n ->
-            If.call(IsLessOrEqual.call(n).call(Ten))
+            If.call(IsLessOrEqual.call(n).call(_9))
               .call(Cons.call(NumberAsChar.call(n)).call(Nil))
               .call(z -> Append.call(_NumberAsString.call(Divide.call(n).call(Ten)))
                                .call(Mod.call(n).call(Ten))

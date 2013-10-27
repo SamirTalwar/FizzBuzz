@@ -22,5 +22,7 @@ public final class CharactersTest {
         assertThat(toS(NumberAsString.call(fromInt(5))), is("5"));
         assertThat(toS(NumberAsString.call(fromInt(23))), is("23"));
         assertThat(toS(NumberAsString.call(fromInt(61))), is("61"));
+        assertThat(toS(NumberAsString.call(fromInt(100))), is("100"));
+        assertThat(toS(NumberAsString.call(fromInt(200))), is("200"));
     }
 }
