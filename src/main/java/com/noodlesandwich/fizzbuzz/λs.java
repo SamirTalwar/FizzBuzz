@@ -1,6 +1,8 @@
 package com.noodlesandwich.fizzbuzz;
 
 public final class λs {
+    private λs() { }
+
     public static final λ Identity = x -> x;
 
     public static final λ True = x -> y -> x;
@@ -13,11 +15,11 @@ public final class λs {
 
     @SuppressWarnings("unused")
     public static final λ Y = f ->
-            ((λ) (x -> f.$(x.$(x))))
-                    .$(x -> f.$(x.$(x)));
+            λ(x -> f.$(x.$(x)))
+                .$(x -> f.$(x.$(x)));
     public static final λ Z = f ->
-            ((λ) (x -> f.$(y -> x.$(x).$(y))))
-                    .$(x -> f.$(y -> x.$(x).$(y)));
+            λ(x -> f.$(y -> x.$(x).$(y)))
+                .$(x -> f.$(y -> x.$(x).$(y)));
 
     public static final λ Add = x -> x.$(Succ);
     public static final λ Subtract = x -> y -> y.$(Pred).$(x);
@@ -68,4 +70,9 @@ public final class λs {
               .$(Cons.$(a).$(x -> _Range.$(Succ.$(a)).$(b).$(x))));
 
     public static final λ Map = f -> Fold.$(h -> t -> Cons.$(f.$(h)).$(t)).$(Nil);
+
+    // I'm so sorry. I had to do it.
+    private static λ λ(λ λ) {
+        return λ;
+    }
 }
