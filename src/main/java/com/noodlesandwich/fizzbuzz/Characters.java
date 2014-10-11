@@ -2,98 +2,111 @@ package com.noodlesandwich.fizzbuzz;
 
 import java.util.List;
 
-import static com.noodlesandwich.fizzbuzz.Lambdas.*;
+import static com.noodlesandwich.fizzbuzz.λs.Append;
+import static com.noodlesandwich.fizzbuzz.λs.Cons;
+import static com.noodlesandwich.fizzbuzz.λs.Divide;
+import static com.noodlesandwich.fizzbuzz.λs.If;
+import static com.noodlesandwich.fizzbuzz.λs.Index;
+import static com.noodlesandwich.fizzbuzz.λs.IsLessOrEqual;
+import static com.noodlesandwich.fizzbuzz.λs.Mod;
+import static com.noodlesandwich.fizzbuzz.λs.Nil;
+import static com.noodlesandwich.fizzbuzz.λs.Range;
+import static com.noodlesandwich.fizzbuzz.λs.Succ;
+import static com.noodlesandwich.fizzbuzz.λs.Z;
+import static com.noodlesandwich.fizzbuzz.λs.Zero;
+import static com.noodlesandwich.fizzbuzz.λs.toInt;
+import static com.noodlesandwich.fizzbuzz.λs.toList;
 
 public final class Characters {
-    public static final Lambda _0 = Zero;
-    public static final Lambda _1 = Succ.call(_0);
-    public static final Lambda _2 = Succ.call(_1);
-    public static final Lambda _3 = Succ.call(_2);
-    public static final Lambda _4 = Succ.call(_3);
-    public static final Lambda _5 = Succ.call(_4);
-    public static final Lambda _6 = Succ.call(_5);
-    public static final Lambda _7 = Succ.call(_6);
-    public static final Lambda _8 = Succ.call(_7);
-    public static final Lambda _9 = Succ.call(_8);
+    public static final λ _0 = Zero;
+    public static final λ _1 = Succ.$(_0);
+    public static final λ _2 = Succ.$(_1);
+    public static final λ _3 = Succ.$(_2);
+    public static final λ _4 = Succ.$(_3);
+    public static final λ _5 = Succ.$(_4);
+    public static final λ _6 = Succ.$(_5);
+    public static final λ _7 = Succ.$(_6);
+    public static final λ _8 = Succ.$(_7);
+    public static final λ _9 = Succ.$(_8);
 
-    public static final Lambda _A = Succ.call(_9);
-    public static final Lambda _B = Succ.call(_A);
-    public static final Lambda _C = Succ.call(_B);
-    public static final Lambda _D = Succ.call(_C);
-    public static final Lambda _E = Succ.call(_D);
-    public static final Lambda _F = Succ.call(_E);
-    public static final Lambda _G = Succ.call(_F);
-    public static final Lambda _H = Succ.call(_G);
-    public static final Lambda _I = Succ.call(_H);
-    public static final Lambda _J = Succ.call(_I);
-    public static final Lambda _K = Succ.call(_J);
-    public static final Lambda _L = Succ.call(_K);
-    public static final Lambda _M = Succ.call(_L);
-    public static final Lambda _N = Succ.call(_M);
-    public static final Lambda _O = Succ.call(_N);
-    public static final Lambda _P = Succ.call(_O);
-    public static final Lambda _Q = Succ.call(_P);
-    public static final Lambda _R = Succ.call(_Q);
-    public static final Lambda _S = Succ.call(_R);
-    public static final Lambda _T = Succ.call(_S);
-    public static final Lambda _U = Succ.call(_T);
-    public static final Lambda _V = Succ.call(_U);
-    public static final Lambda _W = Succ.call(_V);
-    public static final Lambda _X = Succ.call(_W);
-    public static final Lambda _Y = Succ.call(_X);
-    public static final Lambda _Z = Succ.call(_Y);
+    public static final λ _A = Succ.$(_9);
+    public static final λ _B = Succ.$(_A);
+    public static final λ _C = Succ.$(_B);
+    public static final λ _D = Succ.$(_C);
+    public static final λ _E = Succ.$(_D);
+    public static final λ _F = Succ.$(_E);
+    public static final λ _G = Succ.$(_F);
+    public static final λ _H = Succ.$(_G);
+    public static final λ _I = Succ.$(_H);
+    public static final λ _J = Succ.$(_I);
+    public static final λ _K = Succ.$(_J);
+    public static final λ _L = Succ.$(_K);
+    public static final λ _M = Succ.$(_L);
+    public static final λ _N = Succ.$(_M);
+    public static final λ _O = Succ.$(_N);
+    public static final λ _P = Succ.$(_O);
+    public static final λ _Q = Succ.$(_P);
+    public static final λ _R = Succ.$(_Q);
+    public static final λ _S = Succ.$(_R);
+    public static final λ _T = Succ.$(_S);
+    public static final λ _U = Succ.$(_T);
+    public static final λ _V = Succ.$(_U);
+    public static final λ _W = Succ.$(_V);
+    public static final λ _X = Succ.$(_W);
+    public static final λ _Y = Succ.$(_X);
+    public static final λ _Z = Succ.$(_Y);
 
-    public static final Lambda _a = Succ.call(_Z);
-    public static final Lambda _b = Succ.call(_a);
-    public static final Lambda _c = Succ.call(_b);
-    public static final Lambda _d = Succ.call(_c);
-    public static final Lambda _e = Succ.call(_d);
-    public static final Lambda _f = Succ.call(_e);
-    public static final Lambda _g = Succ.call(_f);
-    public static final Lambda _h = Succ.call(_g);
-    public static final Lambda _i = Succ.call(_h);
-    public static final Lambda _j = Succ.call(_i);
-    public static final Lambda _k = Succ.call(_j);
-    public static final Lambda _l = Succ.call(_k);
-    public static final Lambda _m = Succ.call(_l);
-    public static final Lambda _n = Succ.call(_m);
-    public static final Lambda _o = Succ.call(_n);
-    public static final Lambda _p = Succ.call(_o);
-    public static final Lambda _q = Succ.call(_p);
-    public static final Lambda _r = Succ.call(_q);
-    public static final Lambda _s = Succ.call(_r);
-    public static final Lambda _t = Succ.call(_s);
-    public static final Lambda _u = Succ.call(_t);
-    public static final Lambda _v = Succ.call(_u);
-    public static final Lambda _w = Succ.call(_v);
-    public static final Lambda _x = Succ.call(_w);
-    public static final Lambda _y = Succ.call(_x);
-    public static final Lambda _z = Succ.call(_y);
+    public static final λ _a = Succ.$(_Z);
+    public static final λ _b = Succ.$(_a);
+    public static final λ _c = Succ.$(_b);
+    public static final λ _d = Succ.$(_c);
+    public static final λ _e = Succ.$(_d);
+    public static final λ _f = Succ.$(_e);
+    public static final λ _g = Succ.$(_f);
+    public static final λ _h = Succ.$(_g);
+    public static final λ _i = Succ.$(_h);
+    public static final λ _j = Succ.$(_i);
+    public static final λ _k = Succ.$(_j);
+    public static final λ _l = Succ.$(_k);
+    public static final λ _m = Succ.$(_l);
+    public static final λ _n = Succ.$(_m);
+    public static final λ _o = Succ.$(_n);
+    public static final λ _p = Succ.$(_o);
+    public static final λ _q = Succ.$(_p);
+    public static final λ _r = Succ.$(_q);
+    public static final λ _s = Succ.$(_r);
+    public static final λ _t = Succ.$(_s);
+    public static final λ _u = Succ.$(_t);
+    public static final λ _v = Succ.$(_u);
+    public static final λ _w = Succ.$(_v);
+    public static final λ _x = Succ.$(_w);
+    public static final λ _y = Succ.$(_x);
+    public static final λ _z = Succ.$(_y);
 
     private static final char[] characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
 
-    private static final Lambda Ten = Succ.call(_9);
-    private static final Lambda Numbers = Range.call(Zero).call(Ten);
+    private static final λ Ten = Succ.$(_9);
+    private static final λ Numbers = Range.$(Zero).$(Ten);
 
-    public static char toChar(Lambda c) {
+    public static char toChar(λ c) {
         return characters[toInt(c)];
     }
 
-    public static String toS(Lambda list) {
-        List<Lambda> characters = toList(list);
+    public static String toS(λ list) {
+        List<λ> characters = toList(list);
         StringBuilder string = new StringBuilder();
-        for (Lambda c : characters) {
+        for (λ c : characters) {
             string.append(toChar(c));
         }
         return string.toString();
     }
 
-    public static final Lambda NumberAsChar = n -> Index.call(n).call(Numbers);
+    public static final λ NumberAsChar = n -> Index.$(n).$(Numbers);
 
-    public static final Lambda NumberAsString = Z.call(_NumberAsString -> n ->
-            If.call(IsLessOrEqual.call(n).call(_9))
-              .call(Cons.call(NumberAsChar.call(n)).call(Nil))
-              .call(z -> Append.call(_NumberAsString.call(Divide.call(n).call(Ten)))
-                               .call(Mod.call(n).call(Ten))
-                               .call(z)));
+    public static final λ NumberAsString = Z.$(_NumberAsString -> n ->
+            If.$(IsLessOrEqual.$(n).$(_9))
+              .$(Cons.$(NumberAsChar.$(n)).$(Nil))
+              .$(z -> Append.$(_NumberAsString.$(Divide.$(n).$(Ten)))
+                      .$(Mod.$(n).$(Ten))
+                      .$(z)));
 }

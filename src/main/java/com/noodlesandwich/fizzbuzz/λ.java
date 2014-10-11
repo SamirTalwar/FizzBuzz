@@ -1,6 +1,6 @@
 package com.noodlesandwich.fizzbuzz;
 
 @FunctionalInterface
-public interface Lambda {
-    Lambda call(Lambda value);
+public interface λ {
+    λ $(λ value);
 }

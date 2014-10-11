@@ -4,37 +4,53 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.noodlesandwich.fizzbuzz.Characters.*;
-import static com.noodlesandwich.fizzbuzz.Lambdas.*;
+import static com.noodlesandwich.fizzbuzz.Characters.NumberAsString;
+import static com.noodlesandwich.fizzbuzz.Characters._B;
+import static com.noodlesandwich.fizzbuzz.Characters._F;
+import static com.noodlesandwich.fizzbuzz.Characters._i;
+import static com.noodlesandwich.fizzbuzz.Characters._u;
+import static com.noodlesandwich.fizzbuzz.Characters._z;
+import static com.noodlesandwich.fizzbuzz.λs.Concat;
+import static com.noodlesandwich.fizzbuzz.λs.If;
+import static com.noodlesandwich.fizzbuzz.λs.IsZero;
+import static com.noodlesandwich.fizzbuzz.λs.Map;
+import static com.noodlesandwich.fizzbuzz.λs.Mod;
+import static com.noodlesandwich.fizzbuzz.λs.Multiply;
+import static com.noodlesandwich.fizzbuzz.λs.Range;
+import static com.noodlesandwich.fizzbuzz.λs.Succ;
+import static com.noodlesandwich.fizzbuzz.λs.Zero;
+import static com.noodlesandwich.fizzbuzz.λs.fromInt;
+import static com.noodlesandwich.fizzbuzz.λs.fromList;
+import static com.noodlesandwich.fizzbuzz.λs.toList;
 
 public final class FizzBuzz {
-    private static final Lambda One = Succ.call(Zero);
-    private static final Lambda Three = Succ.call(Succ.call(Succ.call(Zero)));
-    private static final Lambda Five = Succ.call(Succ.call(Succ.call(Succ.call(Succ.call(Zero)))));
-    private static final Lambda Fifteen = Multiply.call(Three).call(Five);
+    private static final λ One = Succ.$(Zero);
+    private static final λ Three = Succ.$(Succ.$(Succ.$(Zero)));
+    private static final λ Five = Succ.$(Succ.$(Succ.$(Succ.$(Succ.$(Zero)))));
+    private static final λ Fifteen = Multiply.$(Three).$(Five);
 
-    private static final Lambda _Fizz = fromList(Arrays.asList(_F, _i, _z, _z));
-    private static final Lambda _Buzz = fromList(Arrays.asList(_B, _u, _z, _z));
-    private static final Lambda _FizzBuzz = Concat.call(_Fizz).call(_Buzz);
+    private static final λ _Fizz = fromList(Arrays.asList(_F, _i, _z, _z));
+    private static final λ _Buzz = fromList(Arrays.asList(_B, _u, _z, _z));
+    private static final λ _FizzBuzz = Concat.$(_Fizz).$(_Buzz);
 
     public static List<String> upTo(int max) {
         return toList(upTo(fromInt(max))).stream().map(Characters::toS).collect(Collectors.<String>toList());
     }
 
-    public static Lambda upTo(Lambda max) {
-        return Map.call(i ->
-            If.call(IsZero.call(Mod.call(i).call(Fifteen)))
-              .call(_FizzBuzz)
-              .call(
-            If.call(IsZero.call(Mod.call(i).call(Three)))
-              .call(_Fizz)
-              .call(
-            If.call(IsZero.call(Mod.call(i).call(Five)))
-              .call(_Buzz)
-              .call(
-            NumberAsString.call(i)
-            )))
-        ).call(Range.call(One).call(Succ.call(max)));
+    public static λ upTo(λ max) {
+        return Map.$(i ->
+            If.$(IsZero.$(Mod.$(i).$(Fifteen)))
+              .$(_FizzBuzz)
+              .$(
+                      If.$(IsZero.$(Mod.$(i).$(Three)))
+                              .$(_Fizz)
+                              .$(
+                                      If.$(IsZero.$(Mod.$(i).$(Five)))
+                                              .$(_Buzz)
+                                              .$(
+                                                      NumberAsString.$(i)
+                                              )))
+        ).$(Range.$(One).$(Succ.$(max)));
     }
 
     public static void main(String[] args) {
