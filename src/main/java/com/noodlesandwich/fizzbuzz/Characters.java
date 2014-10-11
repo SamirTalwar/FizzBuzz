@@ -1,7 +1,5 @@
 package com.noodlesandwich.fizzbuzz;
 
-import java.util.List;
-
 import static com.noodlesandwich.fizzbuzz.λs.Append;
 import static com.noodlesandwich.fizzbuzz.λs.Cons;
 import static com.noodlesandwich.fizzbuzz.λs.Divide;
@@ -14,8 +12,6 @@ import static com.noodlesandwich.fizzbuzz.λs.Range;
 import static com.noodlesandwich.fizzbuzz.λs.Succ;
 import static com.noodlesandwich.fizzbuzz.λs.Z;
 import static com.noodlesandwich.fizzbuzz.λs.Zero;
-import static com.noodlesandwich.fizzbuzz.λs.toInt;
-import static com.noodlesandwich.fizzbuzz.λs.toList;
 
 public final class Characters {
     public static final λ _0 = Zero;
@@ -83,23 +79,8 @@ public final class Characters {
     public static final λ _y = Succ.$(_x);
     public static final λ _z = Succ.$(_y);
 
-    private static final char[] characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
-
     private static final λ Ten = Succ.$(_9);
     private static final λ Numbers = Range.$(Zero).$(Ten);
-
-    public static char toChar(λ c) {
-        return characters[toInt(c)];
-    }
-
-    public static String toS(λ list) {
-        List<λ> characters = toList(list);
-        StringBuilder string = new StringBuilder();
-        for (λ c : characters) {
-            string.append(toChar(c));
-        }
-        return string.toString();
-    }
 
     public static final λ NumberAsChar = n -> Index.$(n).$(Numbers);
 

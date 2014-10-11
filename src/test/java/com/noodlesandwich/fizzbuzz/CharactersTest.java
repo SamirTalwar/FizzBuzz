@@ -4,10 +4,10 @@ import org.junit.Test;
 
 import static com.noodlesandwich.fizzbuzz.Characters.NumberAsChar;
 import static com.noodlesandwich.fizzbuzz.Characters.NumberAsString;
-import static com.noodlesandwich.fizzbuzz.Characters.toChar;
-import static com.noodlesandwich.fizzbuzz.Characters.toS;
+import static com.noodlesandwich.fizzbuzz.Conversions.fromInt;
+import static com.noodlesandwich.fizzbuzz.Conversions.toChar;
+import static com.noodlesandwich.fizzbuzz.Conversions.toS;
 import static com.noodlesandwich.fizzbuzz.λs.Zero;
-import static com.noodlesandwich.fizzbuzz.λs.fromInt;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 

@@ -1,8 +1,5 @@
 package com.noodlesandwich.fizzbuzz;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public final class λs {
     public static final λ Identity = x -> x;
 
@@ -71,85 +68,4 @@ public final class λs {
               .$(Cons.$(a).$(x -> _Range.$(Succ.$(a)).$(b).$(x))));
 
     public static final λ Map = f -> Fold.$(h -> t -> Cons.$(f.$(h)).$(t)).$(Nil);
-
-    public static λ fromInt(int integer) {
-        if (integer == 0) {
-            return Zero;
-        }
-
-        return Succ.$(fromInt(integer - 1));
-    }
-
-    public static int toInt(λ lambda) {
-        Result<Integer> i = new Result<>(0);
-        lambda
-            .$(x -> {
-                i.set(i.get() + 1);
-                return x;
-            })
-            .$(Identity);
-        return i.get();
-    }
-
-    public static λ fromList(List<λ> list) {
-        if (list.isEmpty()) {
-            return Nil;
-        }
-
-        λ head = list.get(0);
-        List<λ> tail = list.subList(1, list.size());
-        return Cons.$(head).$(fromList(tail));
-    }
-
-    public static List<λ> toList(λ lambda) {
-        List<λ> result = new ArrayList<>();
-        Z.$(_Loop -> l ->
-                If.$(IsNil.$(l))
-                        .$(Nil)
-                        .$(x -> {
-                            result.add(Head.$(l));
-                            return _Loop.$(Tail.$(l)).$(x);
-                        }))
-        .$(lambda)
-        .$(Identity);
-        return result;
-    }
-
-    public static boolean toBoolean(λ lambda) {
-        Result<Boolean> result = new Result<>();
-        lambda
-            .$(x -> {
-                result.set(true);
-                return x;
-            })
-            .$(x -> {
-                result.set(false);
-                return x;
-            })
-            .$(Identity);
-        return result.get();
-    }
-
-    public static final class Result<T> {
-        private T value = null;
-        private boolean set = false;
-
-        public Result() { }
-
-        public Result(T value) {
-            set(value);
-        }
-
-        public T get() {
-            if (!set) {
-                throw new IllegalStateException("Value was never set.");
-            }
-            return value;
-        }
-
-        public void set(T value) {
-            this.value = value;
-            this.set = true;
-        }
-    }
 }

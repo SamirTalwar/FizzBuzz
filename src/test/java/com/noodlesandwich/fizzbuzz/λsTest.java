@@ -5,6 +5,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.junit.Test;
 
+import static com.noodlesandwich.fizzbuzz.Conversions.fromInt;
+import static com.noodlesandwich.fizzbuzz.Conversions.fromList;
+import static com.noodlesandwich.fizzbuzz.Conversions.toBoolean;
+import static com.noodlesandwich.fizzbuzz.Conversions.toInt;
+import static com.noodlesandwich.fizzbuzz.Conversions.toList;
 import static com.noodlesandwich.fizzbuzz.λs.Add;
 import static com.noodlesandwich.fizzbuzz.λs.Append;
 import static com.noodlesandwich.fizzbuzz.λs.Cons;
@@ -28,11 +33,6 @@ import static com.noodlesandwich.fizzbuzz.λs.Succ;
 import static com.noodlesandwich.fizzbuzz.λs.Tail;
 import static com.noodlesandwich.fizzbuzz.λs.True;
 import static com.noodlesandwich.fizzbuzz.λs.Zero;
-import static com.noodlesandwich.fizzbuzz.λs.fromInt;
-import static com.noodlesandwich.fizzbuzz.λs.fromList;
-import static com.noodlesandwich.fizzbuzz.λs.toBoolean;
-import static com.noodlesandwich.fizzbuzz.λs.toInt;
-import static com.noodlesandwich.fizzbuzz.λs.toList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
@@ -207,11 +207,11 @@ public final class λsTest {
         return a -> a;
     }
 
-    private λ integers(Stream<Integer> of) {
-        return fromList(of.map(λs::fromInt).collect(Collectors.<λ>toList()));
+    private static λ integers(Stream<Integer> of) {
+        return fromList(of.map(Conversions::fromInt).collect(Collectors.<λ>toList()));
     }
 
     private static Iterable<Integer> integers(λ lambda) {
-        return toList(lambda).stream().map(λs::toInt).collect(Collectors.<Integer>toList());
+        return toList(lambda).stream().map(Conversions::toInt).collect(Collectors.<Integer>toList());
     }
 }
